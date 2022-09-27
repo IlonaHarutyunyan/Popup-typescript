@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+//style
 import './App.css';
+//components
+import Popup from './Components/Popup';
+import OpenContext from './Components/Context';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App: React.FC = () => {
+  const [show, setShow] = useState<boolean>(false)
+
+  const showPopup = () => {
+    setShow (!show)
+  }
+   return (
+     <OpenContext.Provider value = {{show,setShow}}>
+       <div className = 'page-wrapper'>
+          {show && 
+            <div className = 'popup-page-wrapper'>
+              <Popup onBackdropClick = {showPopup} isVisible = {show}/>
+            </div>
+          }
+          <button onClick = {showPopup} className = 'button'>click</button>
+        </div>
+     </OpenContext.Provider>
+     
+   )
 }
 
 export default App;
